@@ -76,7 +76,8 @@ module Mongoid
       #
       # @since 4.0.0
       def insert_as_root
-        collection.insert_one(as_document)
+        rs = collection.insert_one(as_document)
+        binding.pry
       end
 
       # Post process an insert, which sets the new record attribute to false

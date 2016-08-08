@@ -1,4 +1,5 @@
 require "spec_helper"
+require 'pry'
 
 describe Mongoid::Persistable::Updatable do
 
@@ -553,6 +554,29 @@ describe Mongoid::Persistable::Updatable do
         expect {
           oscar.update!(title: "The Grouch")
         }.to raise_error(Mongoid::Errors::Callback)
+      end
+    end
+
+    context "when using write concern" do
+      it "raises when saving a new record with that violates uniqueness" do
+        Person.create_indexes
+        #good_person1 = Person.new(ssn: '123')
+        #good_person1.with(write: {w: 1}).save!
+
+        #good_person2 = Person.find(good_person1.id)
+
+        #good_person1.destroy!
+
+        #good_person2.title = 'person2'
+        #good_person2.save!
+
+
+        good_person1 = Person.new(ssn: '123')
+        good_person1.with(write: {w: 1}).save!
+
+        good_person2 = Person.new(ssn: '123')
+        good_person2.with(write: {w: 1}).save!
+
       end
     end
   end

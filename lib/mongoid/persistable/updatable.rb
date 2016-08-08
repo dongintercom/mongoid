@@ -141,9 +141,12 @@ module Mongoid
           unless updates.empty?
             coll = _root.collection
             selector = atomic_selector
-            coll.find(selector).update_one(positionally(selector, updates))
+            result = coll.find(selector).update_one(positionally(selector, updates))
+            binding.pry
+            raise Mongoid::Errors::DocumentNotFound.new(self.class, selector) if result.n == 0
             conflicts.each_pair do |key, value|
-              coll.find(selector).update_one(positionally(selector, { key => value }))
+              result = coll.find(selector).update_one(positionally(selector, { key => value }))
+              raise Mongoid::Errors::DocumentNotFound.new(self.class, selector) if result.n == 0
             end
           end
         end

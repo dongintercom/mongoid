@@ -8,4 +8,5 @@ gem "activemodel", "~> 4.0.12"
 
 group :test do
   gem "rspec", "~> 3.4.0"
+  gem 'pry-byebug'
 end

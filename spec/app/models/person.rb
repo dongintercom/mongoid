@@ -36,6 +36,8 @@ class Person
   field :overridden_setter, type: String
   field :arrays, type: Array
   field :range, type: Range
+  field :user_id, type: String
+  field :email, type: String
 
   index age: 1
   index addresses: 1
